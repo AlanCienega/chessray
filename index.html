@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Chess Ray</title>
+</head>
+
+<body>
+  <div class="container">
+
+    <div id="board" class="flex-container"></div>
+
+    <div class="flex-pieces">
+      <div class="black">
+        <span id="black_king" draggable="true">♚</span>
+        <span draggable="true" id="black_queen">♛</span>
+        <span id="black_rook" draggable="true">♜</span>
+        <span id="black_bishop" draggable="true">♝</span>
+        <span id="black_knight" draggable="true">♞</span>
+        <span id="black_pawn" draggable="true">♟</span>
+      </div>
+      <div class="white">
+        <span id="white_king" draggable="true">♔</span>
+        <span id="white_queen" draggable="true">♕</span>
+        <span id="white_rook" draggable="true">♖</span>
+        <span id="white_bishop" draggable="true">♗</span>
+        <span id="white_knight" draggable="true">♘</span>
+        <span id="white_pawn" draggable="true">♙</span>
+      </div>
+    </div>
+
+  </div>
+  <script src="index.js"></script>
+</body>
+
+</html>

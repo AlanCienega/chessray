@@ -1,0 +1,42 @@
+*{
+  margin: 0;
+  padding: 0;
+  background-color: rgb(177, 177, 177);
+  color: wheat;
+}
+.white-pieces{
+  margin: 0;
+  padding: 0;
+}
+.container{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+span{
+  text-align: center;
+  cursor: pointer;
+  
+}
+.flex-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border: solid 1px gray;
+  margin: 0;
+  padding: 0%;
+  background-color: #aaa;
+  justify-content: center;
+  align-items: center;
+}
+.square{
+  padding: 0%;
+  margin: 0;
+}
+.white span{
+  color: white;
+}
+.black span{
+  color: black;
+}
