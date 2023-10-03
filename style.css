@@ -12,26 +12,29 @@
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 span{
   text-align: center;
   cursor: pointer;
-  
+  margin: 0;
+}
+.theme{
+  text-align: center;
 }
 .flex-container{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  border: solid 1px gray;
-  margin: 0;
+  border: solid 1px darkgray;
+  margin: 0; 
   padding: 0%;
-  background-color: #aaa;
+  background-color: #505050;
   justify-content: center;
   align-items: center;
 }
 .square{
-  padding: 0%;
+  padding: 0;
   margin: 0;
 }
 .white span{
@@ -39,4 +42,17 @@ span{
 }
 .black span{
   color: black;
+}
+.white{
+  display: flex;
+}
+.black{
+  display: flex;
+}
+.dragging{
+  background-color: transparent;
+}
+
+.mt-1{
+  margin-top:1rem;
 }
