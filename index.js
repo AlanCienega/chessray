@@ -45,7 +45,6 @@ buttons.forEach((button) => {
 });
 
 function changeTheme(theme) {
-  console.log(theme);
   body.style.background = theme.split("-")[1];
 }
 
@@ -129,7 +128,7 @@ function handleKingNeighboringCells(x, y, piece) {
   const color = piece.id.split("_")[0];
   for (let i = -1; i <= 1; i++) {
     for (let j = -1; j <= 1; j++) {
-      if (i == 0 && j == 0) continue;
+      if (i === 0 && j === 0) continue;
       let cell = document.getElementById(`${x + i},${y + j}`);
       if (cell) {
         cell.append(drawShadow(color, piece.id));
@@ -140,16 +139,37 @@ function handleKingNeighboringCells(x, y, piece) {
 
 function handlePawnNeighboringCells(x, y, piece) {
   const color = piece.id.split("_")[0];
-  let offsetY = color == "white" ? -1 : 1;
-  let left_cell = document.getElementById(`${x - 1},${y + offsetY}`);
-  let right_cell = document.getElementById(`${x + 1},${y + offsetY}`);
+  let offsetY = color === "white" ? -1 : 1;
+  let leftCell = document.getElementById(`${x - 1},${y + offsetY}`);
+  let rightCell = document.getElementById(`${x + 1},${y + offsetY}`);
 
-  if (left_cell) {
-    left_cell.append(drawShadow(color, piece.id));
+  if (leftCell) {
+    leftCell.append(drawShadow(color, piece.id));
   }
-  if (right_cell) {
-    right_cell.append(drawShadow(color, piece.id));
+  if (rightCell) {
+    rightCell.append(drawShadow(color, piece.id));
   }
+}
+
+function handleKnightNeighboringCells(x, y, piece) {
+  const color = piece.id.split("_")[0];
+  const neighbors = [
+    { x: x - 1, y: y - 2 },
+    { x: x + 1, y: y - 2 },
+    { x: x - 2, y: y - 1 },
+    { x: x - 2, y: y + 1 },
+    { x: x + 2, y: y - 1 },
+    { x: x + 2, y: y + 1 },
+    { x: x - 1, y: y + 2 },
+    { x: x + 1, y: y + 2 },
+  ];
+
+  neighbors.forEach((neighbor) => {
+    const element = document.getElementById(`${neighbor.x},${neighbor.y}`);
+    if (element) {
+      element.append(drawShadow(color, piece.id));
+    }
+  });
 }
 
 squares = document.querySelectorAll(".square");
@@ -180,6 +200,8 @@ squares.forEach((square) => {
       handleKingNeighboringCells(x, y, piece);
     } else if (piece_name == "pawn") {
       handlePawnNeighboringCells(x, y, piece);
+    } else if (piece_name == "knight") {
+      handleKnightNeighboringCells(x, y, piece);
     }
   });
 });
