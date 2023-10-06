@@ -193,6 +193,60 @@ function handleRookNeighboringCells(x, y, piece) {
   });
 }
 
+function handleBishopNeighboringCells(x, y, piece) {
+  const color = piece.id.split("_")[0];
+  const neighbors = [];
+  for (let i = x - 1, j = y - 1; i >= 0 && j >= 0; i--, j--) {
+    neighbors.push({ x: i, y: j });
+  }
+  for (let i = x + 1, j = y - 1; i < 8 && j >= 0; i++, j--) {
+    neighbors.push({ x: i, y: j });
+  }
+  for (let i = x - 1, j = y + 1; i >= 0 && j < 8; i--, j++) {
+    neighbors.push({ x: i, y: j });
+  }
+  for (let i = x + 1, j = y + 1; i < 8 && j < 8; i++, j++) {
+    neighbors.push({ x: i, y: j });
+  }
+
+  neighbors.forEach((neighbor) => {
+    const element = document.getElementById(`${neighbor.x},${neighbor.y}`);
+    element.append(drawShadow(color, piece.id));
+  });
+}
+function handleQueenNeighboringCells(x, y, piece) {
+  const color = piece.id.split("_")[0];
+  const neighbors = [];
+  for (let i = x - 1; i >= 0; i--) {
+    neighbors.push({ x: i, y: y });
+  }
+  for (let i = x + 1; i < 8; i++) {
+    neighbors.push({ x: i, y: y });
+  }
+  for (let i = y - 1; i >= 0; i--) {
+    neighbors.push({ x: x, y: i });
+  }
+  for (let i = y + 1; i < 8; i++) {
+    neighbors.push({ x: x, y: i });
+  }
+  for (let i = x - 1, j = y - 1; i >= 0 && j >= 0; i--, j--) {
+    neighbors.push({ x: i, y: j });
+  }
+  for (let i = x + 1, j = y - 1; i < 8 && j >= 0; i++, j--) {
+    neighbors.push({ x: i, y: j });
+  }
+  for (let i = x - 1, j = y + 1; i >= 0 && j < 8; i--, j++) {
+    neighbors.push({ x: i, y: j });
+  }
+  for (let i = x + 1, j = y + 1; i < 8 && j < 8; i++, j++) {
+    neighbors.push({ x: i, y: j });
+  }
+
+  neighbors.forEach((neighbor) => {
+    const element = document.getElementById(`${neighbor.x},${neighbor.y}`);
+    element.append(drawShadow(color, piece.id));
+  });
+}
 squares = document.querySelectorAll(".square");
 squares.forEach((square) => {
   square.addEventListener("dragover", (e) => {
@@ -225,6 +279,10 @@ squares.forEach((square) => {
       handleKnightNeighboringCells(x, y, piece);
     } else if (piece_name == "rook") {
       handleRookNeighboringCells(x, y, piece);
+    } else if (piece_name == "bishop") {
+      handleBishopNeighboringCells(x, y, piece);
+    } else if (piece_name == "queen") {
+      handleQueenNeighboringCells(x, y, piece);
     }
   });
 });
