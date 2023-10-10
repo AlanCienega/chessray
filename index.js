@@ -48,6 +48,19 @@ function changeTheme(theme) {
   body.style.background = theme.split("-")[1];
 }
 
+function hideEnemyShadows(piece) {
+  const enemy = piece.split("_")[0] == "white" ? "black" : "white";
+  const my_color = piece.split("_")[0];
+  let enemies = document.querySelectorAll(`[class^="${enemy}_"]`);
+  enemies.forEach((element) => {
+    element.style.display = "none";
+  });
+  let my_shadows = document.querySelectorAll(`[class^="${my_color}_"]`);
+  my_shadows.forEach((shadow) => {
+    shadow.style.display = "inherit";
+  });
+}
+
 function dropShadows(piece_name) {
   let shadows = document.querySelectorAll(`.${piece_name}_class`);
   shadows.forEach((shadow) => shadow.remove());
@@ -55,6 +68,7 @@ function dropShadows(piece_name) {
 function addDraggingClass(element) {
   element.addEventListener("dragstart", () => {
     element.classList.add("dragging");
+    hideEnemyShadows(element.id);
     dropShadows(element.id);
   });
   element.addEventListener("dragend", () => {
@@ -87,6 +101,8 @@ function fillSquare(element, x, y) {
 function drawSquare(x, y) {
   square = document.createElement("div");
   square.classList.add("square");
+  square.style.position = "inherit";
+
   square.id = `${x},${y}`;
   setSize(square);
   fillSquare(square, x, y);
@@ -96,7 +112,7 @@ function drawShadow(color, piece_name) {
   shadow = document.createElement("div");
   shadow.classList.add(`${piece_name}_class`);
   shadow.style.background = getTransparentColorPiece(color);
-  shadow.style.position = "absolute";
+  shadow.style.position = "inherit";
   setSize(shadow);
   return shadow;
 }
@@ -252,7 +268,7 @@ squares.forEach((square) => {
   square.addEventListener("dragover", (e) => {
     e.preventDefault();
     const current_piece = document.querySelector(".dragging");
-    current_piece.style.display = "inline-block";
+    current_piece.style.display = "inherit";
 
     const color_piece = current_piece.id.split("_")[0];
     // keep color piece
