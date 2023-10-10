@@ -49,14 +49,16 @@ function changeTheme(theme) {
 }
 
 function hideEnemyShadows(piece) {
-  const enemy = piece.split("_")[0] == "white" ? "black" : "white";
-  const my_color = piece.split("_")[0];
-  let enemies = document.querySelectorAll(`[class^="${enemy}_"]`);
-  enemies.forEach((element) => {
-    element.style.display = "none";
+  const [color, type] = piece.split("_");
+  const enemy = color === "white" ? "black" : "white";
+
+  const enemies = document.querySelectorAll(`[class^="${enemy}_"]`);
+  enemies.forEach((enemyPiece) => {
+    enemyPiece.style.display = "none";
   });
-  let my_shadows = document.querySelectorAll(`[class^="${my_color}_"]`);
-  my_shadows.forEach((shadow) => {
+
+  const myShadows = document.querySelectorAll(`[class^="${color}_"]`);
+  myShadows.forEach((shadow) => {
     shadow.style.display = "inherit";
   });
 }
@@ -133,6 +135,66 @@ function drawBoard() {
 
 drawBoard();
 
+// get cells
+
+function getHorizontalVerticalCells(x, y) {
+  let cells = [];
+  for (let i = x - 1; i >= 0; i--) {
+    cells.push({ x: i, y: y });
+  }
+  for (let i = x + 1; i < 8; i++) {
+    cells.push({ x: i, y: y });
+  }
+  for (let i = y - 1; i >= 0; i--) {
+    cells.push({ x: x, y: i });
+  }
+  for (let i = y + 1; i < 8; i++) {
+    cells.push({ x: x, y: i });
+  }
+  return cells;
+}
+
+function getDiagonalCells(x, y) {
+  let cells = [];
+  for (let i = x - 1, j = y - 1; i >= 0 && j >= 0; i--, j--) {
+    cells.push({ x: i, y: j });
+  }
+  for (let i = x + 1, j = y - 1; i < 8 && j >= 0; i++, j--) {
+    cells.push({ x: i, y: j });
+  }
+  for (let i = x - 1, j = y + 1; i >= 0 && j < 8; i--, j++) {
+    cells.push({ x: i, y: j });
+  }
+  for (let i = x + 1, j = y + 1; i < 8 && j < 8; i++, j++) {
+    cells.push({ x: i, y: j });
+  }
+  return cells;
+}
+
+function getKnightNeighboringCells(x, y) {
+  const cells = [
+    { x: x - 1, y: y - 2 },
+    { x: x + 1, y: y - 2 },
+    { x: x - 2, y: y - 1 },
+    { x: x - 2, y: y + 1 },
+    { x: x + 2, y: y - 1 },
+    { x: x + 2, y: y + 1 },
+    { x: x - 1, y: y + 2 },
+    { x: x + 1, y: y + 2 },
+  ];
+  return cells;
+}
+
+function getKingNeighboringCells(x, y) {
+  const cells = [];
+  for (let i = -1; i <= 1; i++) {
+    for (let j = -1; j <= 1; j++) {
+      if (i == 0 && j == 0) continue;
+      cells.push({ x: x + i, y: y + j });
+    }
+  }
+  return cells;
+}
 function getTransparentColorPiece(color) {
   let rgba_color = `rgba( ${color == "black" ? "255" : "0"}, 0, ${
     color == "white" ? "255" : "0"
@@ -142,15 +204,11 @@ function getTransparentColorPiece(color) {
 
 function handleKingNeighboringCells(x, y, piece) {
   const color = piece.id.split("_")[0];
-  for (let i = -1; i <= 1; i++) {
-    for (let j = -1; j <= 1; j++) {
-      if (i == 0 && j == 0) continue;
-      let cell = document.getElementById(`${x + i},${y + j}`);
-      if (cell) {
-        cell.append(drawShadow(color, piece.id));
-      }
-    }
-  }
+  const neighbors = getKingNeighboringCells(x, y);
+  neighbors.forEach((neighbor) => {
+    const element = document.getElementById(`${neighbor.x},${neighbor.y}`);
+    element.append(drawShadow(color, piece.id));
+  });
 }
 
 function handlePawnNeighboringCells(x, y, piece) {
@@ -169,16 +227,7 @@ function handlePawnNeighboringCells(x, y, piece) {
 
 function handleKnightNeighboringCells(x, y, piece) {
   const color = piece.id.split("_")[0];
-  const neighbors = [
-    { x: x - 1, y: y - 2 },
-    { x: x + 1, y: y - 2 },
-    { x: x - 2, y: y - 1 },
-    { x: x - 2, y: y + 1 },
-    { x: x + 2, y: y - 1 },
-    { x: x + 2, y: y + 1 },
-    { x: x - 1, y: y + 2 },
-    { x: x + 1, y: y + 2 },
-  ];
+  const neighbors = getKnightNeighboringCells(x, y);
 
   neighbors.forEach((neighbor) => {
     const element = document.getElementById(`${neighbor.x},${neighbor.y}`);
@@ -187,22 +236,10 @@ function handleKnightNeighboringCells(x, y, piece) {
     }
   });
 }
+
 function handleRookNeighboringCells(x, y, piece) {
   const color = piece.id.split("_")[0];
-  const neighbors = [];
-  for (let i = x - 1; i >= 0; i--) {
-    neighbors.push({ x: i, y: y });
-  }
-  for (let i = x + 1; i < 8; i++) {
-    neighbors.push({ x: i, y: y });
-  }
-  for (let i = y - 1; i >= 0; i--) {
-    neighbors.push({ x: x, y: i });
-  }
-  for (let i = y + 1; i < 8; i++) {
-    neighbors.push({ x: x, y: i });
-  }
-
+  const neighbors = getHorizontalVerticalCells(x, y);
   neighbors.forEach((neighbor) => {
     const element = document.getElementById(`${neighbor.x},${neighbor.y}`);
     element.append(drawShadow(color, piece.id));
@@ -211,20 +248,7 @@ function handleRookNeighboringCells(x, y, piece) {
 
 function handleBishopNeighboringCells(x, y, piece) {
   const color = piece.id.split("_")[0];
-  const neighbors = [];
-  for (let i = x - 1, j = y - 1; i >= 0 && j >= 0; i--, j--) {
-    neighbors.push({ x: i, y: j });
-  }
-  for (let i = x + 1, j = y - 1; i < 8 && j >= 0; i++, j--) {
-    neighbors.push({ x: i, y: j });
-  }
-  for (let i = x - 1, j = y + 1; i >= 0 && j < 8; i--, j++) {
-    neighbors.push({ x: i, y: j });
-  }
-  for (let i = x + 1, j = y + 1; i < 8 && j < 8; i++, j++) {
-    neighbors.push({ x: i, y: j });
-  }
-
+  const neighbors = getDiagonalCells(x, y);
   neighbors.forEach((neighbor) => {
     const element = document.getElementById(`${neighbor.x},${neighbor.y}`);
     element.append(drawShadow(color, piece.id));
@@ -232,31 +256,10 @@ function handleBishopNeighboringCells(x, y, piece) {
 }
 function handleQueenNeighboringCells(x, y, piece) {
   const color = piece.id.split("_")[0];
-  const neighbors = [];
-  for (let i = x - 1; i >= 0; i--) {
-    neighbors.push({ x: i, y: y });
-  }
-  for (let i = x + 1; i < 8; i++) {
-    neighbors.push({ x: i, y: y });
-  }
-  for (let i = y - 1; i >= 0; i--) {
-    neighbors.push({ x: x, y: i });
-  }
-  for (let i = y + 1; i < 8; i++) {
-    neighbors.push({ x: x, y: i });
-  }
-  for (let i = x - 1, j = y - 1; i >= 0 && j >= 0; i--, j--) {
-    neighbors.push({ x: i, y: j });
-  }
-  for (let i = x + 1, j = y - 1; i < 8 && j >= 0; i++, j--) {
-    neighbors.push({ x: i, y: j });
-  }
-  for (let i = x - 1, j = y + 1; i >= 0 && j < 8; i--, j++) {
-    neighbors.push({ x: i, y: j });
-  }
-  for (let i = x + 1, j = y + 1; i < 8 && j < 8; i++, j++) {
-    neighbors.push({ x: i, y: j });
-  }
+  const neighbors = [
+    ...getHorizontalVerticalCells(x, y),
+    ...getDiagonalCells(x, y),
+  ];
 
   neighbors.forEach((neighbor) => {
     const element = document.getElementById(`${neighbor.x},${neighbor.y}`);
