@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   color: wheat;
+  font-size:larger;
 }
 body{
   background-color:darkcyan;
@@ -46,9 +47,13 @@ span{
 }
 .white{
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .black{
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .dragging{
   background-color: transparent;
@@ -58,14 +63,14 @@ span{
   margin-top:1rem;
 }
 .buttons{
-  margin-top: 20px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-evenly;
 }
 .btn{
   border-radius: 20%;
-  width: 30px;
-  height: 30px;
+  width: 1em;
+  height: 1em;
   border: 2px solid black;
   cursor: pointer;
 }

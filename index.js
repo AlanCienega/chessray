@@ -6,37 +6,84 @@ body = document.querySelector("body");
 height = window.innerHeight;
 width = window.innerWidth;
 max_size = Math.min(height, width);
+
 board.style.width = `${max_size}px`;
 
-// pieces
+// white pieces
 const white_king = document.getElementById("white_king");
 const white_queen = document.getElementById("white_queen");
 const white_rook = document.getElementById("white_rook");
+const white_rook2 = document.getElementById("white_rook2");
 const white_bishop = document.getElementById("white_bishop");
+const white_bishop2 = document.getElementById("white_bishop2");
 const white_knight = document.getElementById("white_knight");
+const white_knight2 = document.getElementById("white_knight2");
+// pawns
 const white_pawn = document.getElementById("white_pawn");
+const white_pawn2 = document.getElementById("white_pawn2");
+const white_pawn3 = document.getElementById("white_pawn3");
+const white_pawn4 = document.getElementById("white_pawn4");
+const white_pawn5 = document.getElementById("white_pawn5");
+const white_pawn6 = document.getElementById("white_pawn6");
+const white_pawn7 = document.getElementById("white_pawn7");
+const white_pawn8 = document.getElementById("white_pawn8");
+
+// black pieces
+const black_pawn = document.getElementById("black_pawn");
+const black_pawn2 = document.getElementById("black_pawn2");
+const black_pawn3 = document.getElementById("black_pawn3");
+const black_pawn4 = document.getElementById("black_pawn4");
+const black_pawn5 = document.getElementById("black_pawn5");
+const black_pawn6 = document.getElementById("black_pawn6");
+const black_pawn7 = document.getElementById("black_pawn7");
+const black_pawn8 = document.getElementById("black_pawn8");
 
 const black_king = document.getElementById("black_king");
 const black_queen = document.getElementById("black_queen");
 const black_rook = document.getElementById("black_rook");
+const black_rook2 = document.getElementById("black_rook2");
 const black_bishop = document.getElementById("black_bishop");
+const black_bishop2 = document.getElementById("black_bishop2");
 const black_knight = document.getElementById("black_knight");
-const black_pawn = document.getElementById("black_pawn");
+const black_knight2 = document.getElementById("black_knight2");
 
-// sizing pieces
-setSize(white_king);
-setSize(white_queen);
-setSize(white_rook);
-setSize(white_bishop);
-setSize(white_knight);
-setSize(white_pawn);
+// WHITE PIECES
+addDraggingClass(white_king);
+addDraggingClass(white_queen);
+addDraggingClass(white_rook);
+addDraggingClass(white_rook2);
+addDraggingClass(white_bishop);
+addDraggingClass(white_bishop2);
+addDraggingClass(white_knight);
+addDraggingClass(white_knight2);
+// pawns
+addDraggingClass(white_pawn);
+addDraggingClass(white_pawn2);
+addDraggingClass(white_pawn3);
+addDraggingClass(white_pawn4);
+addDraggingClass(white_pawn5);
+addDraggingClass(white_pawn6);
+addDraggingClass(white_pawn7);
+addDraggingClass(white_pawn8);
 
-setSize(black_king);
-setSize(black_queen);
-setSize(black_rook);
-setSize(black_bishop);
-setSize(black_knight);
-setSize(black_pawn);
+// black pieces
+addDraggingClass(black_rook);
+addDraggingClass(black_knight);
+addDraggingClass(black_bishop);
+addDraggingClass(black_queen);
+addDraggingClass(black_king);
+addDraggingClass(black_bishop2);
+addDraggingClass(black_knight2);
+addDraggingClass(black_rook2);
+// pawns
+addDraggingClass(black_pawn);
+addDraggingClass(black_pawn2);
+addDraggingClass(black_pawn3);
+addDraggingClass(black_pawn4);
+addDraggingClass(black_pawn5);
+addDraggingClass(black_pawn6);
+addDraggingClass(black_pawn7);
+addDraggingClass(black_pawn8);
 
 buttons.forEach((button) => {
   button.addEventListener("click", (event) => {
@@ -69,6 +116,7 @@ function dropShadows(piece_name) {
 }
 function addDraggingClass(element) {
   element.addEventListener("dragstart", () => {
+    setSize(element);
     element.classList.add("dragging");
     hideEnemyShadows(element.id);
     dropShadows(element.id);
@@ -77,20 +125,6 @@ function addDraggingClass(element) {
     element.classList.remove("dragging");
   });
 }
-
-addDraggingClass(white_king);
-addDraggingClass(white_queen);
-addDraggingClass(white_rook);
-addDraggingClass(white_bishop);
-addDraggingClass(white_knight);
-addDraggingClass(white_pawn);
-
-addDraggingClass(black_king);
-addDraggingClass(black_queen);
-addDraggingClass(black_rook);
-addDraggingClass(black_bishop);
-addDraggingClass(black_knight);
-addDraggingClass(black_pawn);
 
 function fillSquare(element, x, y) {
   if ((x + y) % 2 != 0) {
@@ -279,13 +313,13 @@ squares.forEach((square) => {
 
     if (piece_name == "king") {
       handleKingNeighboringCells(x, y, piece);
-    } else if (piece_name == "pawn") {
+    } else if (piece_name.startsWith("pawn")) {
       handlePawnNeighboringCells(x, y, piece);
-    } else if (piece_name == "knight") {
+    } else if (piece_name.startsWith("knight")) {
       handleKnightNeighboringCells(x, y, piece);
-    } else if (piece_name == "rook") {
+    } else if (piece_name.startsWith("rook")) {
       handleRookNeighboringCells(x, y, piece);
-    } else if (piece_name == "bishop") {
+    } else if (piece_name.startsWith("bishop")) {
       handleBishopNeighboringCells(x, y, piece);
     } else if (piece_name == "queen") {
       handleQueenNeighboringCells(x, y, piece);
