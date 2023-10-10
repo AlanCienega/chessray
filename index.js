@@ -241,6 +241,7 @@ function handleQueenNeighboringCells(x, y, piece) {
 function handleNeighborCells(neighbors, color, pieceId) {
   neighbors.forEach((neighbor) => {
     const element = document.getElementById(`${neighbor.x},${neighbor.y}`);
+    if (!element) return;
     element.append(drawShadow(color, pieceId));
   });
 }
@@ -272,7 +273,7 @@ squares.forEach((square) => {
   square.addEventListener("drop", (e) => {
     const piece = e.target;
     const piece_name = e.target.id.split("_")[1];
-    let coords = e.originalTarget.parentElement.id.split(",");
+    let coords = square.id.split(",");
     let x = parseInt(coords[0]);
     let y = parseInt(coords[1]);
 
