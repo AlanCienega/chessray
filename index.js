@@ -204,68 +204,54 @@ function getTransparentColorPiece(color) {
 
 function handleKingNeighboringCells(x, y, piece) {
   const color = piece.id.split("_")[0];
-  const neighbors = getKingNeighboringCells(x, y);
-  neighbors.forEach((neighbor) => {
-    const element = document.getElementById(`${neighbor.x},${neighbor.y}`);
-    element.append(drawShadow(color, piece.id));
-  });
+  handleNeighborCells(getKingNeighboringCells(x, y), color, piece.id);
 }
 
 function handlePawnNeighboringCells(x, y, piece) {
   const color = piece.id.split("_")[0];
   let offsetY = color == "white" ? -1 : 1;
-  let left_cell = document.getElementById(`${x - 1},${y + offsetY}`);
-  let right_cell = document.getElementById(`${x + 1},${y + offsetY}`);
-
-  if (left_cell) {
-    left_cell.append(drawShadow(color, piece.id));
-  }
-  if (right_cell) {
-    right_cell.append(drawShadow(color, piece.id));
-  }
+  handleSingleNeighborCell(x - 1, y + offsetY, color, piece.id);
+  handleSingleNeighborCell(x + 1, y + offsetY, color, piece.id);
 }
 
 function handleKnightNeighboringCells(x, y, piece) {
   const color = piece.id.split("_")[0];
-  const neighbors = getKnightNeighboringCells(x, y);
-
-  neighbors.forEach((neighbor) => {
-    const element = document.getElementById(`${neighbor.x},${neighbor.y}`);
-    if (element) {
-      element.append(drawShadow(color, piece.id));
-    }
-  });
+  handleNeighborCells(getKnightNeighboringCells(x, y), color, piece.id);
 }
 
 function handleRookNeighboringCells(x, y, piece) {
   const color = piece.id.split("_")[0];
-  const neighbors = getHorizontalVerticalCells(x, y);
-  neighbors.forEach((neighbor) => {
-    const element = document.getElementById(`${neighbor.x},${neighbor.y}`);
-    element.append(drawShadow(color, piece.id));
-  });
+  handleNeighborCells(getHorizontalVerticalCells(x, y), color, piece.id);
 }
 
 function handleBishopNeighboringCells(x, y, piece) {
   const color = piece.id.split("_")[0];
-  const neighbors = getDiagonalCells(x, y);
-  neighbors.forEach((neighbor) => {
-    const element = document.getElementById(`${neighbor.x},${neighbor.y}`);
-    element.append(drawShadow(color, piece.id));
-  });
+  handleNeighborCells(getDiagonalCells(x, y), color, piece.id);
 }
+
 function handleQueenNeighboringCells(x, y, piece) {
   const color = piece.id.split("_")[0];
-  const neighbors = [
-    ...getHorizontalVerticalCells(x, y),
-    ...getDiagonalCells(x, y),
-  ];
+  handleNeighborCells(
+    [...getHorizontalVerticalCells(x, y), ...getDiagonalCells(x, y)],
+    color,
+    piece.id
+  );
+}
 
+function handleNeighborCells(neighbors, color, pieceId) {
   neighbors.forEach((neighbor) => {
     const element = document.getElementById(`${neighbor.x},${neighbor.y}`);
-    element.append(drawShadow(color, piece.id));
+    element.append(drawShadow(color, pieceId));
   });
 }
+
+function handleSingleNeighborCell(x, y, color, pieceId) {
+  const element = document.getElementById(`${x},${y}`);
+  if (element) {
+    element.append(drawShadow(color, pieceId));
+  }
+}
+
 squares = document.querySelectorAll(".square");
 squares.forEach((square) => {
   square.addEventListener("dragover", (e) => {
