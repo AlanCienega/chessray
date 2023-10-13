@@ -1,89 +1,68 @@
-board = document.getElementById("board");
-buttons = document.querySelectorAll(".btn");
-body = document.querySelector("body");
+import board from "./pieces.js";
 
-// variables
-height = window.innerHeight;
-width = window.innerWidth;
-max_size = Math.min(height, width);
+const buttons = document.querySelectorAll(".btn");
+const body = document.querySelector("body");
+let height = window.innerHeight;
+let width = window.innerWidth;
+let max_size = Math.min(height, width);
 
 board.style.width = `${max_size}px`;
 
-// white pieces
-const white_king = document.getElementById("white_king");
-const white_queen = document.getElementById("white_queen");
-const white_rook = document.getElementById("white_rook");
-const white_rook2 = document.getElementById("white_rook2");
-const white_bishop = document.getElementById("white_bishop");
-const white_bishop2 = document.getElementById("white_bishop2");
-const white_knight = document.getElementById("white_knight");
-const white_knight2 = document.getElementById("white_knight2");
-// pawns
-const white_pawn = document.getElementById("white_pawn");
-const white_pawn2 = document.getElementById("white_pawn2");
-const white_pawn3 = document.getElementById("white_pawn3");
-const white_pawn4 = document.getElementById("white_pawn4");
-const white_pawn5 = document.getElementById("white_pawn5");
-const white_pawn6 = document.getElementById("white_pawn6");
-const white_pawn7 = document.getElementById("white_pawn7");
-const white_pawn8 = document.getElementById("white_pawn8");
-
-// black pieces
-const black_pawn = document.getElementById("black_pawn");
-const black_pawn2 = document.getElementById("black_pawn2");
-const black_pawn3 = document.getElementById("black_pawn3");
-const black_pawn4 = document.getElementById("black_pawn4");
-const black_pawn5 = document.getElementById("black_pawn5");
-const black_pawn6 = document.getElementById("black_pawn6");
-const black_pawn7 = document.getElementById("black_pawn7");
-const black_pawn8 = document.getElementById("black_pawn8");
-
-const black_king = document.getElementById("black_king");
-const black_queen = document.getElementById("black_queen");
-const black_rook = document.getElementById("black_rook");
-const black_rook2 = document.getElementById("black_rook2");
-const black_bishop = document.getElementById("black_bishop");
-const black_bishop2 = document.getElementById("black_bishop2");
-const black_knight = document.getElementById("black_knight");
-const black_knight2 = document.getElementById("black_knight2");
-
 // WHITE PIECES
-addDraggingClass(white_king);
-addDraggingClass(white_queen);
-addDraggingClass(white_rook);
-addDraggingClass(white_rook2);
-addDraggingClass(white_bishop);
-addDraggingClass(white_bishop2);
-addDraggingClass(white_knight);
-addDraggingClass(white_knight2);
+const whitePieces = [
+  white_king,
+  white_queen,
+  white_rook,
+  white_rook2,
+  white_bishop,
+  white_bishop2,
+  white_knight,
+  white_knight2,
+];
+
+whitePieces.forEach((piece) => addDraggingClass(piece));
+
 // pawns
-addDraggingClass(white_pawn);
-addDraggingClass(white_pawn2);
-addDraggingClass(white_pawn3);
-addDraggingClass(white_pawn4);
-addDraggingClass(white_pawn5);
-addDraggingClass(white_pawn6);
-addDraggingClass(white_pawn7);
-addDraggingClass(white_pawn8);
+const whitePawns = [
+  white_pawn,
+  white_pawn2,
+  white_pawn3,
+  white_pawn4,
+  white_pawn5,
+  white_pawn6,
+  white_pawn7,
+  white_pawn8,
+];
+
+whitePawns.forEach((pawn) => addDraggingClass(pawn));
 
 // black pieces
-addDraggingClass(black_rook);
-addDraggingClass(black_knight);
-addDraggingClass(black_bishop);
-addDraggingClass(black_queen);
-addDraggingClass(black_king);
-addDraggingClass(black_bishop2);
-addDraggingClass(black_knight2);
-addDraggingClass(black_rook2);
+const blackPieces = [
+  black_rook,
+  black_knight,
+  black_bishop,
+  black_queen,
+  black_king,
+  black_bishop2,
+  black_knight2,
+  black_rook2,
+];
+
+blackPieces.forEach((piece) => addDraggingClass(piece));
+
 // pawns
-addDraggingClass(black_pawn);
-addDraggingClass(black_pawn2);
-addDraggingClass(black_pawn3);
-addDraggingClass(black_pawn4);
-addDraggingClass(black_pawn5);
-addDraggingClass(black_pawn6);
-addDraggingClass(black_pawn7);
-addDraggingClass(black_pawn8);
+const blackPawns = [
+  black_pawn,
+  black_pawn2,
+  black_pawn3,
+  black_pawn4,
+  black_pawn5,
+  black_pawn6,
+  black_pawn7,
+  black_pawn8,
+];
+
+blackPawns.forEach((pawn) => addDraggingClass(pawn));
 
 buttons.forEach((button) => {
   button.addEventListener("click", (event) => {
@@ -135,7 +114,7 @@ function fillSquare(element, x, y) {
 }
 
 function drawSquare(x, y) {
-  square = document.createElement("div");
+  const square = document.createElement("div");
   square.classList.add("square");
   square.style.position = "inherit";
 
@@ -145,7 +124,7 @@ function drawSquare(x, y) {
   board.append(square);
 }
 function drawShadow(color, piece_name) {
-  shadow = document.createElement("div");
+  const shadow = document.createElement("div");
   shadow.classList.add(`${piece_name}_class`);
   shadow.style.background = getTransparentColorPiece(color);
   shadow.style.position = "inherit";
@@ -232,7 +211,7 @@ function getKingNeighboringCells(x, y) {
 function getTransparentColorPiece(color) {
   let rgba_color = `rgba( ${color == "black" ? "255" : "0"}, 0, ${
     color == "white" ? "255" : "0"
-  }, 0.3)`;
+  }, 0.6)`;
   return rgba_color;
 }
 
@@ -287,7 +266,7 @@ function handleSingleNeighborCell(x, y, color, pieceId) {
   }
 }
 
-squares = document.querySelectorAll(".square");
+const squares = document.querySelectorAll(".square");
 squares.forEach((square) => {
   square.addEventListener("dragover", (e) => {
     e.preventDefault();
@@ -306,7 +285,7 @@ squares.forEach((square) => {
   });
   square.addEventListener("drop", (e) => {
     const piece = e.target;
-    const piece_name = e.target.id.split("_")[1];
+    const piece_name = piece.id.split("_")[1];
     let coords = square.id.split(",");
     let x = parseInt(coords[0]);
     let y = parseInt(coords[1]);
