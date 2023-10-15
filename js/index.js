@@ -71,7 +71,9 @@ buttons.forEach((button) => {
 });
 
 function changeTheme(theme) {
-  body.style.background = theme.split("-")[1];
+  const current_theme = body.classList[0];
+  body.classList.remove(current_theme);
+  body.classList.add(theme);
 }
 
 function hideEnemyShadows(piece) {

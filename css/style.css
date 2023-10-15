@@ -4,9 +4,6 @@
   color: wheat;
   font-size:larger;
 }
-body{
-  background-color:darkcyan;
-}
 .white-pieces{
   margin: 0;
   padding: 0;
@@ -74,18 +71,23 @@ span{
   border: 2px solid black;
   cursor: pointer;
 }
-.btn-crimson{
-  background-color:crimson;
+.bg-orange-fun{
+  background: #fc4a1a;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #f7b733, #fc4a1a);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #f7b733, #fc4a1a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
-.btn-darkcyan{
-  background-color: darkcyan;
+.bg-blue-skies{
+  background: #56CCF2;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #2F80ED, #56CCF2);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #2F80ED, #56CCF2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
-.btn-tomato{
-  background-color:tomato;
+.bg-lizard{
+  background: #304352;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #d7d2cc, #304352);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #d7d2cc, #304352); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
-.btn-lightgrey{
-  background-color: lightgrey;
-}
-.btn-dimgrey{
-  background-color: dimgrey;
+.bg-flickr{
+  background: #ff0084;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #a00457, #ff0084);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #770140, #ff0084); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
