@@ -155,15 +155,23 @@ drawBoard();
 function getHorizontalVerticalCells(x, y) {
   let cells = [];
   for (let i = x - 1; i >= 0; i--) {
+    const element = document.getElementById(`${i},${y}`);
+    if (element.children.length && element.children[0].tagName == "SPAN") break;
     cells.push({ x: i, y: y });
   }
   for (let i = x + 1; i < 8; i++) {
+    const element = document.getElementById(`${i},${y}`);
+    if (element.children.length && element.children[0].tagName == "SPAN") break;
     cells.push({ x: i, y: y });
   }
   for (let i = y - 1; i >= 0; i--) {
+    const element = document.getElementById(`${x},${i}`);
+    if (element.children.length && element.children[0].tagName == "SPAN") break;
     cells.push({ x: x, y: i });
   }
   for (let i = y + 1; i < 8; i++) {
+    const element = document.getElementById(`${x},${i}`);
+    if (element.children.length && element.children[0].tagName == "SPAN") break;
     cells.push({ x: x, y: i });
   }
   return cells;
@@ -172,15 +180,23 @@ function getHorizontalVerticalCells(x, y) {
 function getDiagonalCells(x, y) {
   let cells = [];
   for (let i = x - 1, j = y - 1; i >= 0 && j >= 0; i--, j--) {
+    const element = document.getElementById(`${i},${j}`);
+    if (element.children.length && element.children[0].tagName == "SPAN") break;
     cells.push({ x: i, y: j });
   }
   for (let i = x + 1, j = y - 1; i < 8 && j >= 0; i++, j--) {
+    const element = document.getElementById(`${i},${j}`);
+    if (element.children.length && element.children[0].tagName == "SPAN") break;
     cells.push({ x: i, y: j });
   }
   for (let i = x - 1, j = y + 1; i >= 0 && j < 8; i--, j++) {
+    const element = document.getElementById(`${i},${j}`);
+    if (element.children.length && element.children[0].tagName == "SPAN") break;
     cells.push({ x: i, y: j });
   }
   for (let i = x + 1, j = y + 1; i < 8 && j < 8; i++, j++) {
+    const element = document.getElementById(`${i},${j}`);
+    if (element.children.length && element.children[0].tagName == "SPAN") break;
     cells.push({ x: i, y: j });
   }
   return cells;
@@ -256,16 +272,16 @@ function handleQueenNeighboringCells(x, y, piece) {
 function handleNeighborCells(neighbors, color, pieceId) {
   neighbors.forEach((neighbor) => {
     const element = document.getElementById(`${neighbor.x},${neighbor.y}`);
-    if (!element) return;
+    if (element.children.length && element.children[0].tagName == "SPAN")
+      return;
     element.append(drawShadow(color, pieceId));
   });
 }
 
 function handleSingleNeighborCell(x, y, color, pieceId) {
   const element = document.getElementById(`${x},${y}`);
-  if (element) {
-    element.append(drawShadow(color, pieceId));
-  }
+  if (element.children.length && element.children[0].tagName == "SPAN") return;
+  element.append(drawShadow(color, pieceId));
 }
 
 const squares = document.querySelectorAll(".square");
